@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.S.T.R.A. | Verificação de Identidade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --astra-blue: #89b4c4;
+            --vinho-astra: #5a1a1a;
+            --bg-dark: #0a0a0a;
+            --font-geom: 'Coco Gothic', 'Montserrat', 'Century Gothic', Futura, sans-serif;
+        }
+
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            background: #fff; font-family: var(--font-geom);
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+
+        .logo-container { text-align: center; transition: 0.5s; }
+        
+        .astra-symbol {
+            width: 120px; height: 120px; border: 4px solid var(--astra-blue);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 30px; position: relative;
+        }
+        .triangle {
+            width: 0; height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 52px solid var(--astra-blue);
+            margin-top: -8px;
+        }
+
+        h2 { color: var(--astra-blue); letter-spacing: 3px; font-weight: 300; margin-bottom: 40px; text-transform: uppercase; }
+
+        .btn-group { display: flex; gap: 20px; justify-content: center; }
+        .btn {
+            padding: 12px 30px; border: 1px solid var(--astra-blue);
+            background: transparent; color: var(--astra-blue);
+            cursor: pointer; letter-spacing: 2px; transition: 0.3s;
+            font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+        }
+        .btn:hover { background: var(--astra-blue); color: #fff; }
+
+        #key-auth { display: none; margin-top: 20px; }
+        input {
+            background: #f4f4f4; border: 1px solid #ccc; padding: 10px;
+            width: 250px; text-align: center; color: #333; margin-bottom: 10px;
+        }
+        .small-text { font-size: 0.6rem; color: #999; display: block; }
+
+        #hacker-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; color: #0f0; font-family: monospace;
+            display: none; padding: 20px; overflow-y: auto; z-index: 9999;
+        }
+
+        #final-block {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; color: var(--vinho-astra);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; z-index: 10000;
+        }
+        #final-block h1 {
+            font-weight: 600; font-size: 2.5rem; letter-spacing: 2px; margin-bottom: 30px;
+        }
+        .btn-vinho { border-color: var(--vinho-astra); color: var(--vinho-astra); }
+        .btn-vinho:hover { background: var(--vinho-astra); color: #fff; }
+    </style>
+</head>
+<body>
+
+    <div class="logo-container" id="main-auth">
+        <div class="astra-symbol">
+            <div class="triangle"></div>
+        </div>
+        
+        <div id="step-1">
+            <h2>VOCÊ É UM CRIADOR OU CONSUMIDOR?</h2>
+            <div class="btn-group">
+                <button class="btn" onclick="startCriador()">CRIADOR</button>
+                <button class="btn" onclick="startConsumidor()">CONSUMIDOR</button>
+            </div>
+        </div>
+
+        <div id="key-auth">
+            <h2>DIGITE SUA CHAVE</h2>
+            <input type="password" id="input-key" placeholder="********">
+            <span class="small-text">chaves dos criadores contêm letras e números de identificação</span>
+            <div class="btn-group" style="margin-top:20px">
+                <button class="btn" onclick="checkKey()">VERIFICAR</button>
+                <button class="btn" onclick="goBack()">VOLTAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="hacker-screen"></div>
+
+    <div id="final-block">
+        <h1>O CONSELHO FOI AVISADO.</h1>
+        <button class="btn btn-vinho" onclick="resetPage()">RETORNAR AO INÍCIO</button>
+    </div>
+
+    <script>
+        function startConsumidor() {
+            const screen = document.getElementById('hacker-screen');
+            screen.style.display = 'block';
+            screen.innerHTML = ''; 
+            
+            // USEI CRASES ( ` ) PARA AS LINHAS COM CÓDIGO PARA NÃO DAR ERRO
+            let lines = [
+                "> ANALISANDO PERFIL LITERÁRIO DO USUÁRIO...",
+                "> ACESSANDO BANCO DE DADOS ALPHA...",
+                "> ERRO: IDENTIDADE NÃO ENCONTRADA NA CASTA SUPERIOR.",
+                "> RASTREANDO IP DO CONSUMIDOR...",
+                "> ENVIANDO LOCALIZAÇÃO GPS...",
+                "> [!] ALERTA: TENTATIVA DE INVASÃO DETECTADA.",
+                "> STATUS: PROTOCOLO DE EXPURGO INICIADO.",
+                "> BLOQUEANDO DISPOSITIVO...",
+                "> BYPASSING FIREWALL... [SUCCESS]",
+                "> ACCESSING ENCRYPTED KERNEL... 78%",
+                "> Aguarde... estamos escolhendo qual localização iremos registrar.",
+                `> inject_payload({ target: "local_storage", method: "AES-256-BYPASS", destination: "127.0.0.x/remote_vault" });`,
+                "[DATA] Scanning: 'Contas_Bancarias.pdf' ... [CLONING]",
+                "[DATA] Scanning: 'Senhas_Salvas.db' ... [CLONING]",
+                "[DATA] Packet loss: 0%. Connection: STABLE.",
+                `> log("Your security is an illusion."); if (user_detects == true) { hide_process(); }`,
+                "> Set-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows\\Version.A.S.T.R.A\\Criadores\\System' -Name 'DisableTaskMgr' -Volume 1",
+                "[WinAPI] User32.dll :: LockWorkStation();",
+                "[WinAPI] Kernel32.dll :: TerminateProcess(all_user_apps);",
+                "-- DISPOSITIVO BLOQUEADO --",
+                "Aguardando autorização remota do conselho para desbloqueio..."
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if(i < lines.length) {
+                    const p = document.createElement('p');
+                    p.innerText = lines[i];
+                    p.style.margin = "5px 0";
+                    p.style.fontSize = "12px";
+                    p.style.color = (i % 2 === 0) ? "#fff" : "#ff0000"; 
+                    screen.appendChild(p);
+                    // Faz o scroll automático para baixo enquanto o texto aparece
+                    screen.scrollTop = screen.scrollHeight;
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        screen.style.display = 'none';
+                        document.getElementById('main-auth').style.display = 'none';
+                        document.getElementById('final-block').style.display = 'flex';
+                    }, 2000);
+                }
+            }, 300); // Ficou um pouco mais rápido para parecer um sistema processando
+        }
+
+        function startCriador() {
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('key-auth').style.display = 'block';
+        }
+
+        function goBack() {
+            document.getElementById('key-auth').style.display = 'none';
+            document.getElementById('step-1').style.display = 'block';
+            document.getElementById('input-key').value = ''; 
+        }
+
+        function resetPage() {
+            document.getElementById('final-block').style.display = 'none';
+            document.getElementById('main-auth').style.display = 'block';
+            document.getElementById('step-1').style.display = 'block';
+            document.getElementById('key-auth').style.display = 'none';
+            document.getElementById('input-key').value = '';
+        }
+
+        function checkKey() {
+    const key = document.getElementById('input-key').value;
+
+    // Esta regra verifica: Tem pelo menos uma letra? Tem pelo menos um número?
+    const temLetra = /[a-zA-Z]/.test(key);
+    const temNumero = /[0-9]/.test(key);
+
+    if (temLetra && temNumero) {
+        // Se tiver ambos, o acesso é liberado
+        alert("CHAVE DE CRIADOR RECONHECIDA. ACESSO CONCEDIDO.");
+        window.location.href = "sistema.html"; 
+    } else {
+        // Se faltar um dos dois, ele considera invasor (Consumidor)
+        alert("ERRO DE SINTAXE: Chaves de criadores devem conter letras e números.");
+        startConsumidor();
+    }
+}
+    </script>
+</body>
+</html>
